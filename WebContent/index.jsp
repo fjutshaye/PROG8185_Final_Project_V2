@@ -7,7 +7,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="./js/getCharts.js"></script>
-<script src="./js/initialize.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Tao's Final Project</title>
 </head>
