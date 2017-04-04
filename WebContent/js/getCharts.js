@@ -6,6 +6,20 @@ var data_chart_1;
 var data_chart_2;
 var data_chart_3;
 var data_chart_4;
+var yearList;
+
+function initSelect(){
+	$.get(url + "?requestId=requestYearList", function(data, status){
+		//alert(data + status);
+		yearList = data;
+		for(i=0; i<yearList.length; i++){
+			$("#select_year").append($('<option>', {
+				value: yearList[i],
+				text: yearList[i].toString()
+			}));
+		}
+	});
+}
 
 function getChart_1(filterNum, subTitle){
 	$.get(url + "?chartNum=" + 1 + "&filterNum=" + filterNum, function(data, status){
@@ -158,4 +172,38 @@ function draw_chart_3(myData, subTitle){
             data: myData
         }]
     });
+}
+function getChart_4(filterNum, yText){
+	$.get(url + "?chartNum=" + 4 + "&filterNum=" + filterNum, function(data, status){
+		//alert(data + status);
+		data_chart_4 = data;
+		draw_chart_4(data_chart_4, data_chart_4[2], yText);
+	});
+}
+function draw_chart_4(mydata, subTitle, yText){
+	Highcharts.chart('chart_4',{
+		title:{
+			text: "Sale Stats"
+		},
+		subtitle:{
+			text: subTitle
+		},
+		xAxis:{
+			categories: mydata[0]
+		},
+		yAxis:{
+			title: {
+	            text: yText
+	        }
+		},
+		legend:{
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
+		series: [{
+			name: mydata[2],
+			data: mydata[1]
+		}]
+	})
 }

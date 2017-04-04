@@ -25,5 +25,19 @@
 	<jsp:include page="./chart1/chart1.jsp" />
 	<jsp:include page="./chart2/chart2.jsp" />
 	<jsp:include page="./chart3/chart3.jsp" />
+	<jsp:include page="./chart4/chart4.jsp" />
+	
+	<script>
+		getChart_1(1,'Job Title');
+		getChart_2(1,'Tracks Group By Price');
+		
+		$.get(url + "?requestId=requestYearList", function(data, status){
+			//alert(data + status);
+			yearList = data;
+			getChart_3(yearList[0]);
+		});
+		
+		getChart_4(1, 'Value($)')
+	</script>
 </body>
 </html>

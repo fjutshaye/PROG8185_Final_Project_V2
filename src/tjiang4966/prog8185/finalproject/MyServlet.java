@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -101,6 +102,7 @@ public class MyServlet extends HttpServlet {
 				}
 				break;
 			case 4:
+				jsonMethod_3(filterNum, response);
 				break;
 			default:
 				break;
@@ -141,7 +143,6 @@ public class MyServlet extends HttpServlet {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -172,6 +173,70 @@ public class MyServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void jsonMethod_3(int filterNum, HttpServletResponse response){
+		String para = new String();
+		switch (filterNum) {
+		case 1:
+			para = "SUM(Total)";
+			break;
+		case 2:
+			para = "COUNT(*)";
+			break;
+		case 3:
+			para = "AVG(Total)";
+			break;
+		default:
+			System.out.println("No such a filter");
+			break;
+		}
+		String sql = "SELECT " + para +", DATEPART(yyyy, InvoiceDate)"
+				+ " FROM Invoice"
+				+ " GROUP BY DATEPART(yyyy, InvoiceDate)"
+				+ " ORDER BY DATEPART(yyyy, InvoiceDate) ASC";
+		ResultSet rs = null;
+		try {
+			Statement statement = connection.createStatement();
+			rs = statement.executeQuery(sql);
+			List<String> category = new ArrayList<String>();
+			List<Object> jsonList = new ArrayList<Object>();
+			String dataName = new String();
+			if(filterNum == 3){
+				dataName = "Average Amount per Purchase";
+				List<Double> dataList = new ArrayList<Double>();
+				while(rs.next()){
+					dataList.add(rs.getDouble(1));
+					category.add(rs.getString(2));
+				}
+				jsonList.add(category);
+				jsonList.add(dataList);
+				jsonList.add(dataName);
+			}
+			else{
+				if(filterNum == 1)
+					dataName = "Total Amount of Sales";
+				else
+					dataName = "Total Number of Sales";
+				List<Integer> dataList = new ArrayList<Integer>();
+				while(rs.next()){
+					dataList.add(rs.getInt(1));
+					category.add(rs.getString(2));
+				}
+				jsonList.add(category);
+				jsonList.add(dataList);
+				jsonList.add(dataName);
+			}
+			
+			Type listType = new TypeToken<List<Object>>() {}.getType();
+			String json = new Gson().toJson(jsonList, listType);
+			response.setContentType("application/json");
+			response.getWriter().write(json);
+			response.getWriter().flush();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
