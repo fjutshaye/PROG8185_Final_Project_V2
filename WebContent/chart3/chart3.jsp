@@ -4,7 +4,7 @@
 <div>
 	<h1>Chart 3</h1>
 	<div class="div_filterBar">
-		<span>Select Year</span>
+		<span style="display:inline-block">Select Year</span>
 		<select name="year" id="select_year"></select>
 		<script>
 			initSelect();
