@@ -28,6 +28,7 @@
 	<jsp:include page="./chart4/chart4.jsp" />
 	
 	<script>
+	//initialize start-up chart
 		getChart_1(1,'Job Title');
 		getChart_2(1,'Tracks Group By Price');
 		
@@ -38,6 +39,15 @@
 		});
 		
 		getChart_4(1, 'Value($)')
+	</script>
+	<script>
+	//Dynamically change the display property of div_filters with jQuery
+		$(window).resize(function(){
+			if($(window).width() > 840)
+				$(".div_filters").css('display', 'inline-block');
+			else
+				$(".div_filters").css('display', 'none');
+		});
 	</script>
 </body>
 </html>

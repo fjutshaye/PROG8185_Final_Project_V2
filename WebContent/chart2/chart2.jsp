@@ -21,7 +21,8 @@
 			$("#div_filters_2").toggle();
 		});
 		$("#div_filters_2").click(function(){
-			$(this).hide();
+			if($("#menu-div-2").css('display') == 'inline-block')
+				$(this).hide();
 		});
 	</script>
 </div>
