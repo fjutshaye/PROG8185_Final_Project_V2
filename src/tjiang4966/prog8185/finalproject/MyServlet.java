@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,8 +36,6 @@ public class MyServlet extends HttpServlet {
      */
     public MyServlet() {
         super();
-		connection = DatabaseTools.connectToSqlServer();
-		
     }
 
     
@@ -46,6 +43,9 @@ public class MyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+
+		connection = DatabaseTools.connectToSqlServer();
+		
 		String chartNumStr = request.getParameter("chartNum");
 		String filterNumStr = request.getParameter("filterNum");
 		String yearStr = request.getParameter("year_c3");
@@ -123,7 +123,6 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 	private void jsonMethod_1(String sql, HttpServletResponse response){
